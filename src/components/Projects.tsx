@@ -1,0 +1,295 @@
+import React, { useEffect, useState } from 'react';
+import { Tilt } from './Tilt';
+
+const projects = [
+  {
+    title: 'Firewall Policy Manager',
+    desc: 'High-performance firewall policy system with 15+ RESTful APIs, atomic bulk operations, and TypeORM transaction rollback for zero data corruption.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['Node.js', 'TypeScript', 'TypeORM', 'Auth0', 'Redis'],
+  },
+  {
+    title: 'AI Error Logger',
+    desc: 'AI-driven error logging and debugging tool centralising frontend crash reports and backend telemetry, reducing bug resolution time by ~30%.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['React', '.NET Core', 'LLM API', 'TypeScript'],
+  },
+  {
+    title: 'Cage-Credit API',
+    desc: 'Financial transaction system for casino operations covering bank account management, voucher redemption, denomination exchange, and check cashing.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['ASP.NET Core', 'C#', 'SQL Server', 'REST API'],
+  },
+  {
+    title: 'Engage Platform Modules',
+    desc: 'Angular frontend modules for player management platform with complex SQL Server stored procedure optimisation and ~20% load time improvement.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['Angular', 'RxJS', 'TypeScript', 'SQL Server'],
+  },
+  {
+    title: 'Cross-chain Swap Cache',
+    desc: 'Redis caching layer for cross-chain swap quotes with strict user-ownership and quote-expiry validation using LiFi Protocol.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['Redis', 'Node.js', 'Web3', 'LiFi Protocol', 'EVM'],
+  },
+  {
+    title: 'Cypress Test Suite',
+    desc: '750+ end-to-end Cypress automated test cases reducing manual UI testing by 50% and cutting critical production defects across agile release cycles.',
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+      </svg>
+    ),
+    github: 'https://github.com/vi-nayKR',
+    tags: ['Cypress', 'E2E Testing', 'TypeScript', 'Angular'],
+  },
+];
+
+const featuredTags = ['Go', 'Clean Architecture', 'PostgreSQL', 'PostGIS', 'Redis', 'WebSockets', 'MinIO', 'Kotlin', 'Jetpack Compose', 'Cloudflare Tunnel'];
+
+export const Projects: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setParallaxOffset(window.scrollY * 0.02);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const el = document.querySelector('#projects');
+    if (el) {
+      observer.observe(el);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <section id="projects" className="relative py-16 md:py-32 px-4 md:px-6 overflow-hidden">
+      {/* Parallax background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ transform: `translateY(${parallaxOffset}px)` }}
+      >
+        <div
+          className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)' }}
+        />
+      </div>
+
+      {/* Outline background Typography */}
+      <div
+        className="absolute right-[-10%] top-1/4 outline-bg-text select-none pointer-events-none font-black opacity-10 will-change-transform hidden md:block"
+        style={{ transform: `translate3d(${parallaxOffset * 1.0}px, 0, 0)` }}
+      >
+        CREATIONS
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <p className="text-accent font-mono text-xs tracking-widest uppercase mb-4">Portfolio & Projects</p>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-frost text-balance">
+            Featured Work &amp; Creations
+          </h2>
+        </div>
+
+        {/* Featured project (large) */}
+        <Tilt
+          maxTilt={6}
+          scale={1.01}
+          className="mb-8 p-5 md:p-8 rounded-2xl apple-glass card-hover overflow-hidden relative"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'opacity 0.7s, transform 0.7s',
+          }}
+        >
+          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 md:gap-12">
+            {/* Left side: details */}
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                  {/* Vector Icon */}
+                  <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center shrink-0 text-accent">
+                    <svg className="w-8 h-8" viewBox="0 0 463 464" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path fill="currentColor" d="m8.444 232.23 8.273-8.274L239.661 446.9l-8.273 8.273z"/>
+                      <path fill="currentColor" d="m231.393 455.187-8.273-8.273 223.17-223.17 8.273 8.273z"/>
+                      <path fill="currentColor" d="m454.566 231.995-8.273 8.273L223.357 17.332l8.273-8.273z"/>
+                      <path fill="currentColor" d="m231.628 9.057 8.273 8.273L16.731 240.5l-8.273-8.273zM53.238 232.21l6.612-6.61 178.184 178.183-6.612 6.612z"/>
+                      <path fill="currentColor" d="m231.413 410.405-6.612-6.612L403.17 225.426l6.611 6.611z"/>
+                      <path fill="currentColor" d="m409.782 232.024-6.612 6.611L224.986 60.451l6.612-6.611z"/>
+                      <path fill="currentColor" d="m231.604 53.832 6.611 6.611L59.848 238.811l-6.612-6.612zM101.736 232.183l4.808-4.809 129.712 129.712-4.808 4.808z"/>
+                      <path fill="currentColor" d="m231.446 361.89-4.808-4.808 129.839-129.84 4.808 4.81z"/>
+                      <path fill="currentColor" d="M226 347h12v92h-12zM26 238v-12h92v12zm321 0v-12h92v12z"/>
+                      <path fill="currentColor" d="M 215,17.5 a 17.5,17.5 0 1,0 35,0 a 17.5,17.5 0 1,0 -35,0"/>
+                      <path fill="currentColor" d="M 0,232.5 a 17.5,17.5 0 1,0 35,0 a 17.5,17.5 0 1,0 -35,0"/>
+                      <path fill="currentColor" d="M 428,232.5 a 17.5,17.5 0 1,0 35,0 a 17.5,17.5 0 1,0 -35,0"/>
+                      <path fill="currentColor" d="M 215,446.5 a 17.5,17.5 0 1,0 35,0 a 17.5,17.5 0 1,0 -35,0"/>
+                      <path fill="currentColor" d="m239.21 144.35-1.22-3.6-1.61 3.27-3.9 6.27-2.62 4.26c-1.25 2.04-2.59 3.85-4.08 5.78-.69.9-1.07 2.17-1.78 3.16l-3.48 4.82c-1.25 1.74-4.55 10.73-5.18 13.15-1.29 4.99-1.42 10.21-.83 15.31.16 1.37.62 2.44.46 4.06-2.08.2-5.37-8.08-6.04-9.54l-3.78-8.32c-1.86-4.08-2.44-8.34-3.38-12.67-1.22-5.66-2.13-11.12-1.61-16.84.74-8.23 3.31-15.82 7.74-23.1 1.72-2.82 3.22-5.5 5.19-8.19 3.97-5.42 8.26-10.56 10.93-16.6 1.63-3.68 2.76-7.3 4.1-11.08.69-1.95 1.19-8.85.79-11.51l-1.06-7.03c4.17 1.96 6.41 5.07 9.35 7.81 3.99 3.71 10.56 10.82 13.62 15.01l4.78 6.55c4.71 6.45 7.77 13.48 10.86 20.65 1.29 2.99 2.01 5.96 3.06 9.02.61 1.79.87 3.68 1.31 5.53 1.22 5.09 2.24 16.36 1.38 20.97l-1.52 8.24c-.85 4.62-1.94 9.01-4.04 13.31-.76 1.56-1.11 3.44-2.04 4.89-3.95 6.1-2.48 7.14-5.43 10.88-.17.22-.88.67-1.13.55-1.72-.84.4-9.61-.67-13.19-1.86-6.28-.63-8.01-3.67-13.07l-6.01-10.02-3.23-4.83c-1.59-2.38-2.43-5.1-3.29-7.77l-2-6.14Z"/>
+                      <path fill="currentColor" d="M254.96 220.15c.94-2.11 1.81-4.04 2.87-5.94l3.48-6.22 2.3-4.06 3.79-7.26c4.36-8.35 6.91-16.31 8.63-25.68.26-1.41.24-3.15.33-4.62.7-10.85 6.34-10.07 6.05-24.01-.07-3.31-.8-4.66.91-5.21 1.79 2.32 2.85 5.06 3.9 7.8.37.95 1.07 2.02 1.35 3.05 1.96 7.26 3.36 14.73 2.85 22.38-.59 8.75-3.81 19.09-9.28 25.94-3 3.76-13.75 13.89-17.56 16.57-2.12 1.49-3.44 3.33-5.12 5.29-1.49 1.73-3.39 3.57-4.18 5.69-.12.33-1.08.76-1.37.62-.35-.17-.45-.98-.28-1.37l1.32-2.98Zm-37.36 1.25c-.94-2.11-1.81-4.04-2.87-5.94l-3.48-6.22-2.3-4.06-3.79-7.26c-4.36-8.35-6.91-16.31-8.63-25.68-.26-1.41-.24-3.15-.33-4.62-.7-10.85-6.34-10.07-6.05-24.01.07-3.31.8-4.66-.91-5.21-1.79 2.32-2.85 5.06-3.9 7.8-.37.95-1.07 2.02-1.35 3.05-1.96 7.26-3.36 14.73-2.85 22.38.59 8.75 3.81 19.09 9.28 25.94 3 3.76 13.75 13.89 17.56 16.57 2.12 1.49 3.44 3.33 5.12 5.29 1.49 1.73 3.39 3.57 4.18 5.69.12.33 1.08.76 1.37.62.35-.17.45-.98.28-1.37l-1.32-2.98Z"/>
+                      <path fill="currentColor" d="m203.37 236.06 6.48 6.26 3.42 2.87c.51.43 2.84 1.75 2.1 2.82-.15.22-.67.14-1 0l-12.93-5.94c-1.93-.89-3.63-2.01-5.49-3.17-12.55-7.84-20.58-13.62-28.75-26.22-6.57-10.12-8.85-20.23-9.81-32.11-.41-5.13.78-16.51 2.2-21.26l1.71-5.72c1.7-.48 5.19 4.02 7.41 5.89 3.97 3.35 7.06 7.85 9.3 12.58l.11 16.56c.37 5.08 1.4 9.82-2.94 14.64.57 1.79 1.04 3.54 1.87 5.22l2.87 5.79c.98 1.98 2.13 3.67 3.44 5.43 1.51 2.03 2.82 4.13 4.44 6.05l3.37 4.01c1.9 2.25 4.13 4.18 6.34 6.32Zm68.26 0-6.48 6.26-3.42 2.87c-.51.43-2.84 1.75-2.1 2.82.15.22.67.14 1 0l12.93-5.94c1.93-.89 3.63-2.01 5.49-3.17 12.55-7.84 20.58-13.62 28.75-26.22 6.57-10.12-8.85-20.23 9.81-32.11.41-5.13-.78-16.51-2.2-21.26l-1.71-5.72c-1.7-.48-5.19 4.02-7.41 5.89-3.97 3.35-7.06 7.85-9.3 12.58l-.11 16.56c-.37 5.08-1.4 9.82-2.94 14.64-.57 1.79-1.04 3.54-1.87 5.22l-2.87 5.79c-.98 1.98-2.13 3.67-3.44 5.43-1.51 2.03-2.82 4.13-4.44 6.05l-3.37 4.01c-1.9 2.25-4.13 4.18-6.34 6.32ZM141.27 206.7c.54 4.12 5.58 13.18 8.45 16.15l4.01 4.17c.99 1.03 2.24 2.08 3.43 2.9l4.69 3.23c2.43 1.67 5.05 2.91 7.77 4.19 1.29.61 6.23 2.12 5.68 3.17-.1.18-.57.47-.84.44l-6.48-.66c-13.87-1.42-24.21-8.75-32.06-19.93-1.92-2.73-3.32-5.53-4.69-8.58-1.87-4.13-2.79-8.33-3.51-12.82-.76-4.81-1.6-9.23-1.24-14.15l.33-4.57c.05-.71.14-1.49 1.05-1.55 2.29 2.52 1.66 2.47 4.36 5.33.92.97 1.69 2.32 2.74 3.13 2.59 2 5.12 3.9 7.87 5.64l3.9 2.48c2.39 1.52 5.27 2.62 7.02 4.94l2.64 3.48c.81 1.07 1.4 2.32 2.28 3.35.65.77 1.5 2.1.25 2.78-.34.18-.93-.84-1.2-1.1-.7-.63-1.91-1.08-2.76-1.56-1.31-.73-2.53-1.58-3.89-2.17-2.75-1.2-5.47-1.92-8.36-2.63l-2.05-.5.63 4.82Zm188.93 1.87c-.51 3.89-5.28 12.46-7.99 15.28l-3.79 3.94c-.94.98-2.12 1.97-3.25 2.74l-4.43 3.05c-2.3 1.58-4.77 2.75-7.35 3.96-1.22.58-5.89 2-5.37 3 .09.17.54.45.79.42l6.13-.63c13.12-1.34 22.9-8.28 30.32-18.85 1.82-2.59 3.13-5.23 4.44-8.11 1.77-3.9 2.64-7.88 3.32-12.12.72-4.54 1.51-8.73 1.17-13.38l-.31-4.32c-.05-.67-.14-1.41-.99-1.46-2.16 2.38-1.57 2.34-4.12 5.04-.87.92-1.6 2.19-2.59 2.96-2.45 1.89-4.84 3.68-7.44 5.34l-3.68 2.34c-2.26 1.44-4.98 2.48-6.64 4.67l-2.5 3.29c-.77 1.02-1.32 2.19-2.15 3.17-.61.72-1.41 1.99-.24 2.63.32.17.88-.8 1.14-1.04.66-.6 1.8-1.02 2.61-1.48 1.24-.69 2.39-1.49 3.68-2.06 2.6-1.13 5.18-1.82 7.9-2.48l1.94-.47-.6 4.56Zm-83.41 53.29-7.54-3.36c-2.31-1.03-4.47-1.95-6.98-2.59-4.95-1.25-16-.76-20.64 1.68l-3.69 1.94c1.75-3.97 4.87-4.4 7.88-5.68 6.52-2.76 13.75-2.55 20.44-.59 1.96.57 3.6 1.17 5.39 2.19 3.02 1.73 6.21 3.05 9.32 4.61 2.3 1.15 4.43 1.52 7.28 1.35-.1 3.22-9.52 1.29-11.46.43Z"/>
+                      <path fill="currentColor" d="m229.42 261.86 7.54-3.36c2.31-1.03 4.47-1.95 6.98-2.59 4.95-1.25 16-.76 20.64 1.68l3.69 1.94c-1.75-3.97-4.87-4.4-7.88-5.68-6.52-2.76-13.75-2.55-20.44-.59-1.96.57-3.6 1.17-5.39 2.19-3.02 1.73-6.21 3.05-9.32 4.61-2.3 1.15-4.43 1.52-7.28 1.35.1 3.22 9.52 1.29 11.46.43Z"/>
+                      <path fill="currentColor" d="M 98,230 a 13,13 0 1,0 26,0 a 13,13 0 1,0 -26,0"/>
+                      <path fill="currentColor" d="M 219,349 a 13,13 0 1,0 26,0 a 13,13 0 1,0 -26,0"/>
+                      <path fill="currentColor" d="M 341,229 a 13,13 0 1,0 26,0 a 13,13 0 1,0 -26,0"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <span className="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded mb-2 inline-block">Featured Project</span>
+                    <h3 className="text-2xl font-display font-bold text-frost">Medha</h3>
+                    <p className="text-accent text-xs font-mono tracking-widest uppercase mt-0.5">A SACRED BRIDGE</p>
+                  </div>
+                </div>
+                <a
+                  href="https://github.com/vi-nayKR"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-border hover:border-accent/50 text-muted hover:text-frost text-sm transition-all duration-200 self-start sm:self-center"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                  </svg>
+                  View Code
+                </a>
+              </div>
+
+              {/* Short description */}
+              <div className="space-y-4 mb-6 text-muted text-sm leading-relaxed max-w-2xl">
+                <p>
+                  <strong className="text-frost">Setu:</strong> A sacred bridge connecting Yajmans and Pandits, designed purely for dharmic connection.
+                </p>
+                <p>
+                  <strong className="text-frost">Architecture:</strong> Clean Architecture with isolated bounded contexts across four layers: Domain, Postgres Repository (pgx/PostGIS), Service, and Handler.
+                </p>
+                <p>
+                  <strong className="text-frost">Core Systems:</strong> Real-time WebSocket chat (Redis Pub/Sub), spatial matchmaking (ST_DWithin), MinIO media proxying, and CI/CD deployment via Cloudflare Tunnel.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {featuredTags.map((tag) => (
+                  <span key={tag} className="px-3 py-1 rounded-full text-xs font-mono bg-void border border-accent/30 text-accent">{tag}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right side: Mobile Screenshot */}
+            <div className="w-full lg:w-64 shrink-0 flex justify-center">
+              <Tilt
+                maxTilt={6}
+                scale={1.03}
+                className="w-48 lg:w-full max-w-[220px] aspect-[9/20] overflow-hidden rounded-2xl border border-border/30 bg-void/50 shadow-2xl relative group/medha-img"
+              >
+                <img
+                  src="/medha-app.png"
+                  alt="Medha App Onboarding"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover/medha-img:scale-105"
+                />
+              </Tilt>
+            </div>
+          </div>
+        </Tilt>
+
+        {/* Project grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((proj, i) => (
+            <Tilt
+              key={proj.title}
+              maxTilt={10}
+              scale={1.03}
+              className="p-6 rounded-2xl apple-glass card-hover flex flex-col"
+              style={{
+                opacity: visible ? 1 : 0,
+                transform: visible ? 'translateY(0)' : 'translateY(30px)',
+                transition: `opacity 0.6s ease ${0.1 + i * 0.1}s, transform 0.6s ease ${0.1 + i * 0.1}s`,
+              }}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center text-accent">
+                  {proj.icon}
+                </div>
+                <div className="flex gap-2">
+                  {proj.github && (
+                    <a href={proj.github} target="_blank" rel="noopener noreferrer"
+                       className="text-muted hover:text-frost transition-colors">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <h3 className="font-display font-semibold text-frost mb-2">{proj.title}</h3>
+              <p className="text-sm text-muted leading-relaxed flex-1 mb-4">{proj.desc}</p>
+
+              <div className="flex flex-wrap gap-1.5">
+                {proj.tags.map((tag) => (
+                  <span key={tag} className="px-2 py-0.5 rounded text-xs bg-void border border-border text-muted font-mono">{tag}</span>
+                ))}
+              </div>
+            </Tilt>
+          ))}
+        </div>
+
+        {/* GitHub CTA */}
+        <div className="mt-12 text-center">
+          <a
+            href="https://github.com/vi-nayKR"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-8 py-4 rounded-xl border border-border hover:border-accent/50 text-frost font-semibold text-sm transition-all duration-200 hover:bg-surface hover:-translate-y-0.5 hover:shadow-xl hover:shadow-accent/10"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            See all repositories on GitHub
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};

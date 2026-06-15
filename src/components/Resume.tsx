@@ -1,0 +1,115 @@
+import React, { useEffect, useState } from 'react';
+
+export const Resume: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setParallaxOffset(window.scrollY * 0.02);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const el = document.querySelector('#resume');
+    if (el) {
+      observer.observe(el);
+    }
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      observer.disconnect();
+    };
+  }, []);
+
+  return (
+    <section id="resume" className="relative py-16 md:py-32 px-4 md:px-6 overflow-hidden bg-void">
+      {/* Parallax background decorative elements */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ transform: `translateY(${parallaxOffset}px)` }}
+      >
+        <div
+          className="absolute top-1/4 left-1/4 w-[400px] h-[400px] rounded-full"
+          style={{ background: 'radial-gradient(circle, rgba(255,107,0,0.04) 0%, transparent 70%)' }}
+        />
+      </div>
+
+      {/* Outline background Typography */}
+      <div
+        className="absolute right-[-5%] top-1/3 outline-bg-text select-none pointer-events-none font-black opacity-10 will-change-transform hidden md:block"
+        style={{ transform: `translate3d(${parallaxOffset * -0.5}px, 0, 0)` }}
+      >
+        RESUME
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <p className="text-accent font-mono text-xs tracking-widest uppercase mb-4">Curriculum Vitae</p>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-frost mb-4 text-balance">
+            Interactive Resume
+          </h2>
+          <p className="text-muted max-w-xl mx-auto text-sm leading-relaxed">
+            View my professional background, projects, skill details, and experience directly on the page, or download a physical copy.
+          </p>
+        </div>
+
+        {/* Resume Preview Container */}
+        <div 
+          className="apple-glass rounded-2xl overflow-hidden p-4 md:p-6 shadow-2xl flex flex-col gap-6"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
+          {/* Embed PDF Iframe */}
+          <div className="relative w-full aspect-[1/1.414] md:h-[750px] md:aspect-auto rounded-xl overflow-hidden border border-border bg-abyss">
+            <iframe
+              src="/resume.pdf"
+              className="w-full h-full border-none shadow-inner"
+              allow="autoplay"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Buttons/Actions */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 border-t border-border/60 pt-6">
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2.5 px-6 py-3.5 w-full sm:w-auto rounded-xl bg-accent hover:bg-accent-glow text-frost font-bold text-sm transition-all duration-300 hover:shadow-lg hover:shadow-accent/25 transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+              </svg>
+              Open in New Tab
+            </a>
+            
+            <a
+              href="/resume.pdf"
+              download="Vinay_KR_Resume.pdf"
+              className="flex items-center justify-center gap-2.5 px-6 py-3.5 w-full sm:w-auto rounded-xl border border-border hover:border-accent/40 hover:bg-surface text-frost font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 active:translate-y-0"
+            >
+              <svg className="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
