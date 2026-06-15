@@ -71,3 +71,16 @@ export default defineConfig([
   },
 ])
 ```
+
+## Deployment to Cloudflare Pages
+
+To deploy this project to Cloudflare Pages:
+
+1. Connect your repository to Cloudflare Pages.
+2. Configure the following **Build settings**:
+   - **Framework preset**: `Vite` (or `None`)
+   - **Build command**: `npm run build`
+   - **Build output directory**: `dist`
+3. The Node.js version is configured via the [.node-version](file:///.node-version) file.
+
+A `public/_redirects` file is included in this repository to handle client-side routing fallbacks correctly.
