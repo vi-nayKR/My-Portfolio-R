@@ -83,4 +83,4 @@ To deploy this project to Cloudflare Pages:
    - **Build output directory**: `dist`
 3. The Node.js version is configured via the [.node-version](file:///.node-version) file.
 
-A `public/_redirects` file is included in this repository to handle client-side routing fallbacks correctly.
+The build script automatically copies `index.html` to `200.html` in the build output directory (`dist`) to handle client-side routing fallbacks correctly on Cloudflare Pages and Workers.
