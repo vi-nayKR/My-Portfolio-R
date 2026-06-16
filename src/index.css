@@ -82,6 +82,18 @@ body {
   will-change: transform;
 }
 
+/* ── Hero section: guaranteed navbar clearance ─────────────────────────────
+   Raw CSS (not Tailwind) so padding is ALWAYS applied regardless of class
+   generation. Fixed navbar is ~64px; 160px gives a reliable safe gap.       */
+#home {
+  padding-top: 160px;
+}
+@media (min-width: 768px) {
+  #home {
+    padding-top: 160px;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
