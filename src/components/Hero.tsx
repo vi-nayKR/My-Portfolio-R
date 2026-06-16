@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-start md:justify-center overflow-hidden px-4 md:px-6 pb-12 md:pb-24"
+      className="relative min-h-screen flex flex-col items-center justify-start md:justify-center overflow-hidden px-4 md:px-6 pt-24 md:pt-0 pb-12 md:pb-24"
     >
       {/* Huge Parallax Background Text */}
       <div
