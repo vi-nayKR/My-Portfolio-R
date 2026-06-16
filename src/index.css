@@ -279,3 +279,26 @@ html.lenis, html.lenis body {
   pointer-events: none;
 }
 
+/* ─── Global Section Spacing ─────────────────────────────────────
+   Tighten vertical padding on all page sections globally.
+   Tailwind inline py-* classes are overridden here via specificity. */
+main > section {
+  padding-top: 3.5rem !important;   /* 56px - was up to 128px */
+  padding-bottom: 3.5rem !important;
+}
+@media (min-width: 768px) {
+  main > section {
+    padding-top: 5rem !important;   /* 80px - was 128px */
+    padding-bottom: 5rem !important;
+  }
+}
+
+/* ─── Side Nav Lane (xl+) ────────────────────────────────────────
+   Reserve 196px on the right at xl breakpoint so the fixed side
+   nav never overlaps section content — global, one-time fix. */
+@media (min-width: 1280px) {
+  main {
+    padding-right: 196px;
+  }
+}
+

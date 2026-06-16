@@ -6,6 +6,8 @@ const navItems = [
   { label: 'Experience', href: '#experience', id: 'experience' },
   { label: 'Resume', href: '#resume', id: 'resume' },
   { label: 'Projects', href: '#projects', id: 'projects' },
+  { label: 'Conference', href: '#conference', id: 'conference' },
+  { label: 'B.E.', href: '#major-project', id: 'major-project' },
   { label: 'Certifications', href: '#certifications', id: 'certifications' },
   { label: 'Gaming', href: '#gaming', id: 'gaming' },
   { label: 'Setup', href: '#setup', id: 'setup' },
@@ -61,7 +63,7 @@ export const Navbar: React.FC = () => {
   };
 
   const determineActiveSection = () => {
-    const sections = ['home', 'about', 'skills', 'experience', 'resume', 'projects', 'certifications', 'contact', 'gaming', 'setup'];
+    const sections = ['home', 'about', 'skills', 'experience', 'resume', 'projects', 'conference', 'major-project', 'certifications', 'contact', 'gaming', 'setup'];
     let currentActive = 'home';
     
     if (window.scrollY < 100) {
@@ -118,8 +120,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl rounded-2xl apple-glass transition-all duration-500 py-2.5 px-6 flex items-center justify-between ${
-        scrolled ? 'top-2 border-accent/30 shadow-accent/5' : 'top-4'
+      className={`fixed left-0 right-0 z-50 apple-glass transition-all duration-500 py-3 px-6 flex items-center justify-between ${
+        scrolled ? 'top-0 border-b border-accent/20 shadow-lg shadow-accent/5' : 'top-0'
       }`}
     >
       {/* Logo: Vinay */}
@@ -158,12 +160,12 @@ export const Navbar: React.FC = () => {
           {isDarkMode ? (
             // Sun Icon
             <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
             </svg>
           ) : (
             // Moon Icon
-            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
           )}
         </button>
@@ -186,13 +188,13 @@ export const Navbar: React.FC = () => {
         >
           {isDarkMode ? (
             // Sun Icon
-            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
             </svg>
           ) : (
             // Moon Icon
-            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path strokeLinecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
             </svg>
           )}
         </button>
@@ -204,9 +206,9 @@ export const Navbar: React.FC = () => {
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             {!menuOpen ? (
-              <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
             ) : (
-              <path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             )}
           </svg>
         </button>

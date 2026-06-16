@@ -7,6 +7,8 @@ const navSections = [
   { id: 'experience', label: 'Work Experience' },
   { id: 'resume', label: 'Interactive Resume' },
   { id: 'projects', label: 'Featured Projects' },
+  { id: 'conference', label: 'Conference & Paper' },
+  { id: 'major-project', label: 'B.E. Major Project' },
   { id: 'certifications', label: 'Certifications' },
   { id: 'gaming', label: 'Playground / Gaming' },
   { id: 'setup', label: 'OS Workspace' },
@@ -89,7 +91,7 @@ export const ScrollNav: React.FC = () => {
     <>
       {/* On this page text navigation (Desktop only) */}
       <div 
-        className={`fixed right-8 top-[30%] z-50 hidden xl:flex flex-col gap-2 max-w-[220px] text-left transition-all duration-300 ${
+        className={`fixed right-4 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-1.5 w-[180px] text-left transition-all duration-300 ${
           hideNav ? 'opacity-0 pointer-events-none' : 'opacity-100'
         }`}
       >
@@ -147,12 +149,12 @@ export const ScrollNav: React.FC = () => {
         {scrollPercentage > 80 ? (
           // Double Up Arrow
           <svg className="w-5 h-5 text-accent group-hover:text-accent-glow transition-colors duration-200 z-10 animate-pulse" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" stroke-linejoin="round" d="M4.5 11.25l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 11.25l7.5-7.5 7.5 7.5m-15 6l7.5-7.5 7.5 7.5" />
           </svg>
         ) : (
           // Double Down Arrow
           <svg className="w-5 h-5 text-accent group-hover:text-accent-glow transition-colors duration-200 z-10 animate-bounce" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path strokeLinecap="round" stroke-linejoin="round" d="M4.5 12.75l7.5 7.5 7.5-7.5m-15-6l7.5 7.5 7.5-7.5" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l7.5 7.5 7.5-7.5m-15-6l7.5 7.5 7.5-7.5" />
           </svg>
         )}
       </button>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Model3d } from './Model3d';
 import { PHOTO_BASE64 } from './photo-data';
 
 const floatingTags = [
@@ -151,28 +150,55 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Interactive 3D Model with Overlaying Profile Photo (45%) */}
+        {/* Right Column: Profile Photo (45%) */}
         <div className="w-full md:w-[45%] flex items-center justify-center relative min-h-[400px] md:min-h-[500px]">
-          {/* Interactive 3D WebGL Layer */}
-          <div className="absolute inset-0 z-0">
-            <Model3d />
-          </div>
+          {/* Ambient glow behind photo */}
+          <div
+            className="absolute w-64 h-64 rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle, rgba(255,107,0,0.18) 0%, transparent 65%)',
+              transform: `translate3d(${mousePos.x * 0.03}px, ${mousePos.y * 0.03}px, 0)`,
+              filter: 'blur(28px)',
+            }}
+          />
 
-          {/* Profile Photo floating in center of 3D gyroscope system */}
-          <div className="relative z-10 pointer-events-none animate-float" style={{ animationDelay: '0s' }}>
+          {/* Rotating outer ring */}
+          <div
+            className="absolute w-72 h-72 md:w-80 md:h-80 rounded-full border border-accent/20 pointer-events-none"
+            style={{
+              transform: `rotate(${mousePos.x * 0.04}deg)`,
+              borderStyle: 'dashed',
+              transition: 'transform 0.6s ease-out',
+            }}
+          />
+          <div
+            className="absolute w-60 h-60 md:w-72 md:h-72 rounded-full border border-accent/10 pointer-events-none"
+            style={{
+              transform: `rotate(${-mousePos.x * 0.06}deg)`,
+              borderStyle: 'dashed',
+              transition: 'transform 0.8s ease-out',
+            }}
+          />
+
+          {/* Profile photo */}
+          <div className="relative z-10 animate-float" style={{ animationDelay: '0s' }}>
             <div
-              className="relative w-40 h-40 md:w-48 md:h-48 rounded-full animate-pulse-glow border border-accent/20 overflow-hidden"
-              style={{ background: 'radial-gradient(circle, var(--color-surface) 0%, var(--color-abyss) 100%)' }}
+              className="relative w-52 h-52 md:w-60 md:h-60 rounded-full"
+              style={{
+                transform: `translate3d(${mousePos.x * 0.015}px, ${mousePos.y * 0.015}px, 0)`,
+                transition: 'transform 0.3s ease-out',
+              }}
             >
-              {/* Ring decorations */}
-              <div className="absolute inset-0 rounded-full border-2 border-accent/40 scale-110 transition-transform duration-500" />
-              <div className="absolute inset-0 rounded-full border border-accent/20 scale-125 transition-transform duration-700" />
-
+              {/* Glow ring */}
+              <div className="absolute inset-0 rounded-full animate-pulse-glow" style={{ background: 'radial-gradient(circle, rgba(255,107,0,0.12) 0%, transparent 60%)' }} />
+              {/* Accent border rings */}
+              <div className="absolute -inset-2 rounded-full border-2 border-accent/30" />
+              <div className="absolute -inset-4 rounded-full border border-accent/15" />
               {/* Photo */}
               <img
                 src={PHOTO_BASE64}
                 alt="Vinay KR"
-                className="w-full h-full rounded-full object-cover p-1.5 border-2 border-accent/60"
+                className="w-full h-full rounded-full object-cover border-2 border-accent/50 shadow-2xl shadow-accent/20"
                 style={{ objectPosition: 'center top' }}
               />
             </div>

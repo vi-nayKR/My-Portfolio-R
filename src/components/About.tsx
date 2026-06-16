@@ -172,7 +172,7 @@ export const About: React.FC = () => {
                       <div className="absolute inset-0 bg-void/60 opacity-0 group-hover/edu-img:opacity-100 flex items-center justify-center transition-opacity duration-300">
                         <span className="px-1.5 py-0.5 rounded bg-accent text-frost text-[8px] font-semibold flex items-center gap-0.5 shadow-lg">
                           <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
                           View
                         </span>

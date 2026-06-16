@@ -12,6 +12,8 @@ import { Skills } from './components/Skills';
 import { Experience } from './components/Experience';
 import { Resume } from './components/Resume';
 import { Projects } from './components/Projects';
+import { MajorProject } from './components/MajorProject';
+import { Conference } from './components/Conference';
 import { Certifications } from './components/Certifications';
 import { Gaming } from './components/Gaming';
 import { Setup } from './components/Setup';
@@ -93,6 +95,8 @@ const IndexPage = () => {
       <Experience />
       <Resume />
       <Projects />
+      <Conference />
+      <MajorProject />
       <Certifications />
       <Gaming />
       <Setup />
