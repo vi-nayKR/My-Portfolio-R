@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 md:px-6 pt-32 pb-16 md:pt-40 md:pb-24"
+      className="relative min-h-screen flex flex-col items-center justify-start md:justify-center overflow-hidden px-4 md:px-6 pt-24 pb-12 md:pt-40 md:pb-24"
     >
       {/* Huge Parallax Background Text */}
       <div
@@ -100,7 +100,7 @@ export const Hero: React.FC = () => {
         </div>
       ))}
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-12 flex-1">
+      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 flex-1">
         {/* Left Column: Name & Title Greeting (55%) */}
         <div className="w-full md:w-[55%] flex flex-col items-center md:items-start text-center md:text-left">
           
@@ -151,7 +151,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Right Column: Profile Photo (45%) */}
-        <div className="w-full md:w-[45%] flex items-center justify-center relative min-h-[400px] md:min-h-[500px]">
+        <div className="w-full md:w-[45%] flex items-center justify-center relative min-h-[280px] md:min-h-[500px]">
           {/* Ambient glow behind photo */}
           <div
             className="absolute w-64 h-64 rounded-full pointer-events-none"
@@ -164,7 +164,7 @@ export const Hero: React.FC = () => {
 
           {/* Rotating outer ring */}
           <div
-            className="absolute w-72 h-72 md:w-80 md:h-80 rounded-full border border-accent/20 pointer-events-none"
+            className="absolute w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 rounded-full border border-accent/20 pointer-events-none"
             style={{
               transform: `rotate(${mousePos.x * 0.04}deg)`,
               borderStyle: 'dashed',
@@ -172,7 +172,7 @@ export const Hero: React.FC = () => {
             }}
           />
           <div
-            className="absolute w-60 h-60 md:w-72 md:h-72 rounded-full border border-accent/10 pointer-events-none"
+            className="absolute w-52 h-52 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full border border-accent/10 pointer-events-none"
             style={{
               transform: `rotate(${-mousePos.x * 0.06}deg)`,
               borderStyle: 'dashed',
@@ -183,7 +183,7 @@ export const Hero: React.FC = () => {
           {/* Profile photo */}
           <div className="relative z-10 animate-float" style={{ animationDelay: '0s' }}>
             <div
-              className="relative w-52 h-52 md:w-60 md:h-60 rounded-full"
+              className="relative w-44 h-44 sm:w-52 sm:h-52 md:w-60 md:h-60 rounded-full"
               style={{
                 transform: `translate3d(${mousePos.x * 0.015}px, ${mousePos.y * 0.015}px, 0)`,
                 transition: 'transform 0.3s ease-out',
@@ -207,7 +207,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Scroll indicator (absolute bottom) */}
-      <div className="relative z-10 mt-16 flex flex-col items-center gap-2 text-muted animate-fade-in-up" style={{ animationDelay: '0.7s', opacity: 1 }}>
+      <div className="relative z-10 mt-10 md:mt-16 flex flex-col items-center gap-2 text-muted animate-fade-in-up" style={{ animationDelay: '0.7s', opacity: 1 }}>
         <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
         <div className="w-px h-10 bg-gradient-to-b from-accent to-transparent animate-pulse" />
       </div>
