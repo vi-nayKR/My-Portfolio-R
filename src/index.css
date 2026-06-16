@@ -86,11 +86,11 @@ body {
    Raw CSS (not Tailwind) so padding is ALWAYS applied regardless of class
    generation. Fixed navbar is ~64px; 160px gives a reliable safe gap.       */
 #home {
-  padding-top: 160px;
+  padding-top: 6.5rem !important;
 }
 @media (min-width: 768px) {
   #home {
-    padding-top: 160px;
+    padding-top: 0 !important;
   }
 }
 
