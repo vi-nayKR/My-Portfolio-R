@@ -53,7 +53,7 @@ export const Hero: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-start md:justify-center overflow-hidden px-4 md:px-6 pt-24 pb-12 md:pt-40 md:pb-24"
+      className="relative min-h-screen flex flex-col items-center justify-start md:justify-center overflow-hidden px-4 md:px-6 pt-32 pb-12 md:pt-40 md:pb-24"
     >
       {/* Huge Parallax Background Text */}
       <div
@@ -100,7 +100,7 @@ export const Hero: React.FC = () => {
         </div>
       ))}
 
-      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 flex-1">
+      <div className="relative z-10 max-w-6xl w-full mx-auto flex flex-col md:flex-row items-center justify-start md:justify-between gap-8 md:gap-12 flex-1">
         {/* Left Column: Name & Title Greeting (55%) */}
         <div className="w-full md:w-[55%] flex flex-col items-center md:items-start text-center md:text-left">
           
