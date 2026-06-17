@@ -9,8 +9,8 @@ const navItems = [
   { label: 'Conference', href: '#conference', id: 'conference' },
   { label: 'B.E.', href: '#major-project', id: 'major-project' },
   { label: 'Certifications', href: '#certifications', id: 'certifications' },
-  { label: 'Gaming', href: '#gaming', id: 'gaming' },
-  { label: 'Setup', href: '#setup', id: 'setup' },
+  // { label: 'Gaming', href: '#gaming', id: 'gaming' },
+  // { label: 'Setup', href: '#setup', id: 'setup' },
   { label: 'Contact', href: '#contact', id: 'contact' },
 ];
 
@@ -63,7 +63,7 @@ export const Navbar: React.FC = () => {
   };
 
   const determineActiveSection = () => {
-    const sections = ['home', 'about', 'skills', 'experience', 'resume', 'projects', 'conference', 'major-project', 'certifications', 'contact', 'gaming', 'setup'];
+    const sections = ['home', 'about', 'skills', 'experience', 'resume', 'projects', 'conference', 'major-project', 'certifications', 'contact'];
     let currentActive = 'home';
     
     if (window.scrollY < 100) {
@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
     }
 
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-      setActiveSection('setup');
+      setActiveSection('contact');
       return;
     }
 

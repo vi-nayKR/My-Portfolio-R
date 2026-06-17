@@ -15,8 +15,7 @@ import { Projects } from './components/Projects';
 import { MajorProject } from './components/MajorProject';
 import { Conference } from './components/Conference';
 import { Certifications } from './components/Certifications';
-import { Gaming } from './components/Gaming';
-import { Setup } from './components/Setup';
+// import { Setup } from './components/Setup';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 
@@ -98,8 +97,8 @@ const IndexPage = () => {
       <Conference />
       <MajorProject />
       <Certifications />
-      <Gaming />
-      <Setup />
+      {/* <Gaming /> */}
+      {/* <Setup /> */}
       <Contact />
       <Footer />
     </>
