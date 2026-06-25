@@ -181,6 +181,13 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Toggle Box (Theme + Menu) */}
       <div className="flex items-center gap-3 md:hidden">
+        <a
+          href="#contact"
+          onClick={(e) => handleNavItemClick(e, 'contact')}
+          className="px-3.5 py-1.5 rounded-xl bg-accent hover:bg-accent-glow text-frost text-xs font-bold transition-all duration-200 shadow-md shadow-accent/10 hover:shadow-lg hover:shadow-accent/20"
+        >
+          Hire Me
+        </a>
         <button
           onClick={toggleTheme}
           className="p-2 rounded-lg border border-border text-muted hover:text-frost cursor-pointer flex items-center justify-center shrink-0"
