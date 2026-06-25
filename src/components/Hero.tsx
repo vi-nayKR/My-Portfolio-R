@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PHOTO_BASE64 } from './photo-data';
 
 const floatingTags = [
-  { text: '<Code />', top: '22%', left: '10%', speedX: 0.05, speedY: 0.04, target: 'projects' },
   { text: 'Go', top: '16%', left: '78%', speedX: -0.06, speedY: 0.03, target: 'skills' },
   { text: 'RxJS', top: '68%', left: '8%', speedX: 0.04, speedY: -0.05, target: 'skills' },
   { text: '2FA', top: '78%', left: '80%', speedX: -0.05, speedY: 0.03, target: 'skills' },
@@ -12,14 +11,30 @@ const floatingTags = [
 
 const techs = ['React', 'Angular', 'TypeScript', 'Node.js', 'Go', 'PostgreSQL', 'Redis', 'Docker', 'Auth0', 'Cypress'];
 
+// Rotating role titles — cycles every 2.6s for a living, animated headline.
+const roles = ['Full Stack Developer', 'Backend Engineer', 'Web3 Builder', 'Clean Architecture Advocate'];
+
 export const Hero: React.FC = () => {
   const [parallaxY, setParallaxY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [hoveredTag, setHoveredTag] = useState<string | null>(null);
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [roleVisible, setRoleVisible] = useState(true);
+
+  // Magnetic CTA refs — translate the button toward the cursor on hover.
+  const magneticRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
+    // rAF-throttled scroll: coalesce multiple scroll events into one frame
+    // for a smoother, jank-free parallax that never blocks the main thread.
+    let ticking = false;
     const onScroll = () => {
-      setParallaxY(window.scrollY);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setParallaxY(window.scrollY);
+        ticking = false;
+      });
     };
 
     const onMouseMove = (event: MouseEvent) => {
@@ -37,6 +52,37 @@ export const Hero: React.FC = () => {
       window.removeEventListener('mousemove', onMouseMove);
     };
   }, []);
+
+  // Rotating role text: fade out → swap → fade in, on an interval.
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return; // keep static role for reduced-motion users
+
+    const interval = setInterval(() => {
+      setRoleVisible(false); // begin fade out
+      setTimeout(() => {
+        setRoleIndex((i) => (i + 1) % roles.length);
+        setRoleVisible(true); // fade back in with new role
+      }, 350);
+    }, 2600);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Magnetic pointer attraction for the primary CTA.
+  const handleMagneticMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const el = magneticRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    // Translate at 30% of the pointer offset — a subtle, premium pull.
+    el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+  };
+  const handleMagneticLeave = () => {
+    const el = magneticRef.current;
+    if (el) el.style.transform = 'translate(0px, 0px)';
+  };
 
   const scrollToSection = (targetId: string) => {
     const el = document.getElementById(targetId);
@@ -108,13 +154,23 @@ export const Hero: React.FC = () => {
             <h1 className="text-4xl md:text-6xl font-display font-bold leading-none mb-6 text-frost">
               👋 Hi, I'm <span className="gradient-text">Vinay</span>!
             </h1>
-            <p className="text-accent font-mono text-xs md:text-sm tracking-widest mb-4 uppercase">Full Stack Developer</p>
+            <p className="text-accent font-mono text-xs md:text-sm tracking-widest mb-4 uppercase h-5 overflow-hidden">
+              <span
+                className="inline-block"
+                style={{
+                  opacity: roleVisible ? 1 : 0,
+                  transform: roleVisible ? 'translateY(0)' : 'translateY(-100%)',
+                  transition: 'opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+              >
+                {roles[roleIndex]}
+              </span>
+            </p>
             <p className="text-muted text-lg md:text-xl max-w-2xl mx-auto md:mx-0 leading-relaxed mt-4">
-              Building production-grade applications across{' '}
+              Building production-grade web applications, robust APIs, and intelligent automation across{' '}
               <span className="text-frost font-medium">FinTech</span>,{' '}
-              <span className="text-frost font-medium">Web3 Custody</span>, and{' '}
-              <span className="text-frost font-medium">Casino Gaming</span> domains
-              with 3+ years of experience.
+              <span className="text-frost font-medium">Web3</span>, and{' '}
+              <span className="text-frost font-medium">high-throughput ecosystems</span>.
             </p>
           </div>
 
@@ -130,9 +186,12 @@ export const Hero: React.FC = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 mt-10 animate-fade-in-up" style={{ animationDelay: '0.5s', opacity: 1 }}>
             <a
+              ref={magneticRef}
               href="#projects"
               onClick={(e) => { e.preventDefault(); scrollToSection('projects'); }}
-              className="px-8 py-3.5 rounded-xl bg-accent hover:bg-accent-glow text-frost font-semibold text-sm transition-all duration-200 hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5 text-center"
+              onMouseMove={handleMagneticMove}
+              onMouseLeave={handleMagneticLeave}
+              className="magnetic px-8 py-3.5 rounded-xl bg-accent hover:bg-accent-glow text-frost font-semibold text-sm transition-colors duration-200 hover:shadow-xl hover:shadow-accent/25 text-center will-change-transform"
             >
               View Projects
             </a>

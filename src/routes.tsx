@@ -84,7 +84,6 @@ const rootRoute = createRootRoute({
   component: RootLayout,
 });
 
-// Index page component carrying all sections
 const IndexPage = () => {
   return (
     <>

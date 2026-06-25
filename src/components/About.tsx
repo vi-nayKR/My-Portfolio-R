@@ -113,13 +113,13 @@ export const About: React.FC = () => {
               Passionate about <span className="gradient-text">Architecture &amp; Code</span>
             </h2>
             <p className="text-muted leading-relaxed mb-4">
-              Full Stack Developer with 3+ years of experience building production-grade web applications
-              and APIs across FinTech, Web3 custody, and casino gaming domains.
+              Full Stack Engineer with 3+ years of experience building production-grade web applications, robust APIs,
+              and intelligent automation across FinTech, Web3, and high-throughput product ecosystems.
             </p>
             <p className="text-muted leading-relaxed mb-6">
-              Equally comfortable building <span className="text-frost">Angular</span> and <span className="text-frost">React</span> frontends
-              as designing <span className="text-frost">Go</span> and <span className="text-frost">Node.js/Express</span> backend services.
-              Strong believer in clean architecture, security-first design, and agentic coding.
+              Specializes in building scalable backends with <span className="text-frost">Go</span> and <span className="text-frost">Node.js</span>,
+              and crafting interactive frontends with <span className="text-frost">Angular</span> and <span className="text-frost">React</span>.
+              Deep expertise in security-focused authentication (RBAC, JWT, 2FA), PostgreSQL/PostGIS, and containerized DevOps pipelines.
             </p>
 
             {/* Quick stats */}
