@@ -34,7 +34,7 @@ const experiences = [
     tags: ['Angular', 'React', 'ASP.NET Core', 'C#', 'SQL Server', 'Cypress', 'TypeScript'],
     image: '/slot-machine.png',
     aspect: 'aspect-[1/2]',
-    maxWidth: 'max-w-[160px]',
+    maxWidth: 'max-w-[320px]',
   },
   {
     role: 'Full Stack Intern',
@@ -48,6 +48,7 @@ const experiences = [
     tags: ['C#', 'Angular', 'ASP.NET Core', 'SQL Server'],
     image: '/roulette.png',
     aspect: 'aspect-[4/3]',
+    maxWidth: 'max-w-[320px]',
   },
 ];
 
@@ -169,9 +170,9 @@ export const Experience: React.FC = () => {
                       <Tilt
                         maxTilt={6}
                         scale={1.03}
-                        className={`mt-4 w-full ${exp.maxWidth || 'max-w-[280px]'} md:aspect-auto flex-1 min-h-0 overflow-hidden rounded-xl border border-border/30 bg-void/50 group/exp-img shadow-lg cursor-pointer ${
-                          exp.aspect || 'aspect-[4/3]'
-                        }`}
+                        className={`mt-4 w-full ${exp.maxWidth || 'max-w-[320px]'} ${
+                          exp.aspect === 'aspect-[1/2]' ? 'md:aspect-auto flex-1 min-h-0 aspect-[1/2]' : (exp.aspect || 'aspect-[16/9]')
+                        } overflow-hidden rounded-xl border border-border/30 bg-void/50 group/exp-img shadow-lg cursor-pointer`}
                       >
                         <img
                           src={exp.image}

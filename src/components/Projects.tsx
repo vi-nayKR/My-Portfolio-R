@@ -75,6 +75,15 @@ const featuredTags = ['Go', 'Clean Architecture', 'PostgreSQL', 'PostGIS', 'Redi
 export const Projects: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [currentMedhaSlide, setCurrentMedhaSlide] = useState(0);
+  const medhaImages = ['/medha-app-1.jpg', '/medha-app-2.jpg', '/medha-app-3.jpg', '/medha-app-4.jpg'];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentMedhaSlide((prev) => (prev + 1) % medhaImages.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -211,18 +220,43 @@ export const Projects: React.FC = () => {
               </div>
             </div>
 
-            {/* Right side: Mobile Screenshot */}
-            <div className="w-full lg:w-64 shrink-0 flex justify-center">
+            {/* Right side: Mobile Screenshot Slideshow */}
+            <div className="w-full lg:w-80 shrink-0 flex justify-center">
               <Tilt
                 maxTilt={6}
                 scale={1.03}
-                className="w-48 lg:w-full max-w-[220px] aspect-[9/20] overflow-hidden rounded-2xl border border-border/30 bg-void/50 shadow-2xl relative group/medha-img"
+                className="w-64 lg:w-full max-w-[286px] aspect-[9/20] overflow-hidden rounded-2xl border border-border/30 bg-void/50 shadow-2xl relative group/medha-img"
               >
-                <img
-                  src="/medha-app.png"
-                  alt="Medha App Onboarding"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover/medha-img:scale-105"
-                />
+                {/* Slides */}
+                <div className="w-full h-full relative">
+                  {medhaImages.map((src, index) => (
+                    <img
+                      key={src}
+                      src={src}
+                      alt={`Medha App Screen ${index + 1}`}
+                      className="absolute inset-x-0 w-full h-[102%] object-cover transition-opacity duration-1000 ease-in-out"
+                      style={{
+                        top: '-2%',
+                        opacity: currentMedhaSlide === index ? 1 : 0,
+                        zIndex: currentMedhaSlide === index ? 10 : 0,
+                      }}
+                    />
+                  ))}
+                </div>
+
+                {/* Dot Indicators */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                  {medhaImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentMedhaSlide(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                        currentMedhaSlide === index ? 'bg-accent w-4' : 'bg-frost/40 hover:bg-frost/70'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </Tilt>
             </div>
           </div>
